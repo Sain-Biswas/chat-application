@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 export const signupSchema = z.object({
   name: z.string().trim().min(1, {
@@ -120,13 +121,37 @@ export default function Page() {
                     Password <span className="text-red-600">*</span>{" "}
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="********" {...field} />
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="********"
+                        type={showPassword ? "text" : "password"}
+                        {...field}
+                      />
+                      <Button
+                        size="icon"
+                        onClick={(event) => {
+                          event.preventDefault();
+                          setShowPassword((curr) => !curr);
+                        }}
+                      >
+                        {showPassword ? (
+                          <EyeOpenIcon className="h-5 w-5" />
+                        ) : (
+                          <EyeClosedIcon className="h-5 w-5" />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" className="w-full" disabled={isCreating}>
+              {isCreating && (
+                <div className="mr-2 h-5 w-5 animate-spin rounded-full border-t-2 text-transparent">
+                  .
+                </div>
+              )}
               Submit
             </Button>
           </form>

@@ -49,8 +49,24 @@ export default function Page() {
     setIsLoading(true);
 
     const response = await SignInServer(values.email, values.password);
-    toast(response?.toString() || "Else");
-    if (response === 200) router.push("/");
+    if (response === 200) {
+      toast.success("Login Successful", {
+        description: "Redirecting to dashboard",
+      });
+      router.push("/");
+    } else if (response === 404) {
+      toast.error("Unregistered Email", {
+        description: "Sign up to continue",
+      });
+    } else if (response === 406) {
+      toast.error("Invalid Credentials", {
+        description: "Enter correct credentials to Sign in",
+      });
+    } else {
+      toast.error("Internal Server Error", {
+        description: "Please try again later",
+      });
+    }
     setIsLoading(false);
   }
 
@@ -119,7 +135,7 @@ export default function Page() {
             />
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && (
-                <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-t-0 text-transparent">
+                <div className="mr-2 h-5 w-5 animate-spin rounded-full border-t-2 text-transparent">
                   .
                 </div>
               )}
