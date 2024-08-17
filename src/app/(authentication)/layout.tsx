@@ -52,7 +52,7 @@ export default function Layout({
           <Button variant="link">
             {" "}
             <Link
-              href="www.github.com"
+              href="https://github.com/Sain-Biswas/chat-application"
               target="_blank"
               className="flex items-center gap-1"
             >
