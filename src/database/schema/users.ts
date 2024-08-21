@@ -1,4 +1,6 @@
+import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { infer } from "zod";
 
 export const users = sqliteTable("user", {
   id: text("id")
@@ -10,3 +12,5 @@ export const users = sqliteTable("user", {
   image: text("image"),
   password: text("password"),
 });
+
+export type Users = InferSelectModel<typeof users>;

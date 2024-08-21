@@ -6,6 +6,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { users } from "./users";
 import type { AdapterAccountType } from "next-auth/adapters";
+import { InferSelectModel } from "drizzle-orm";
 
 export const accounts = sqliteTable(
   "account",
@@ -30,3 +31,5 @@ export const accounts = sqliteTable(
     }),
   }),
 );
+
+export type Accounts = InferSelectModel<typeof accounts>;

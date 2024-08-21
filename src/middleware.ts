@@ -5,13 +5,19 @@ export async function middleware(request: NextRequest) {
   const session = await getSession();
   const url = request.nextUrl.clone();
 
+  if(request.nextUrl.pathname.length <= 1){
+    return NextResponse.redirect(url);
+  }
+
   if (session) {
     if (request.nextUrl.pathname.includes("/sign")) {
-      url.pathname = "/";
+      url.pathname = "/dashboard";
       return NextResponse.redirect(url);
     }
   } else {
-    if (!request.nextUrl.pathname.includes("/sign")) {
+    if (
+      !request.nextUrl.pathname.includes("/sign")
+    ) {
       url.pathname = "/signin";
       return NextResponse.redirect(url);
     }
